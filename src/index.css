@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.receipt-shadow {
+  box-shadow: 5px 5px 150px 10px rgba(23, 23, 23, 0.5);
+}

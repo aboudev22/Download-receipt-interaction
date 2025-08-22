@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const items = [
@@ -40,7 +41,7 @@ export default function App() {
   return (
     <div
       onClick={() => setDownload(false)}
-      className="w-screen h-screen bg-white flex justify-center items-center"
+      className="w-screen h-screen bg-amber-50 flex justify-center items-center"
     >
       <main>
         {download && <FullReceipt />}
@@ -97,7 +98,9 @@ const Transaction = ({
 
 const Modal = ({ viewFullReceipt }: { viewFullReceipt: () => void }) => {
   return (
-    <section
+    <motion.section
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       onClick={(e) => e.stopPropagation()}
       className="p-4 rounded-2xl absolute bg-stone-50"
     >
@@ -135,7 +138,7 @@ const Modal = ({ viewFullReceipt }: { viewFullReceipt: () => void }) => {
       >
         Download Receipt
       </button>
-    </section>
+    </motion.section>
   );
 };
 
@@ -150,6 +153,7 @@ const FullReceipt = () => {
           lineColor: "#000",
           width: 2,
           height: 60,
+          background: "#e7e5e4",
           displayValue: false,
           fontSize: 14,
           margin: 10,
@@ -159,7 +163,11 @@ const FullReceipt = () => {
   }, []);
 
   return (
-    <div className="p-4 pt-10 w-fit absolute bg-stone-100 z-30 rounded-md border-double">
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="receipt-shadow top-20 p-4 pt-10 w-[500px] h-[650px] fixed bg-stone-200 z-30 rounded-md"
+    >
       <div className="w-full flex flex-col items-center">
         <h1 className="text-2xl font-black text-black">Walmart</h1>
         <p className="my-2">friday, August 22, 2025 . 1:30 AM</p>
@@ -197,6 +205,11 @@ const FullReceipt = () => {
           <canvas ref={canvasRef}></canvas>
         </div>
       </footer>
-    </div>
+      <div className="flex w-[500px] overflow-x-hidden -translate-x-4 translate-y-6">
+        {Array.from({ length: 22 }).map((_, i) => (
+          <div key={i} className="w-5 h-5 flex-none bg-stone-200 rotate-45" />
+        ))}
+      </div>
+    </motion.div>
   );
 };
